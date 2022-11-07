@@ -7,6 +7,14 @@
 		@vite
 	</head>
 	<body class="antialiased bg-gray-900">
-		@inertia
+		<strong>Database Connected: </strong>
+<?php
+    try {
+        \DB::connection()->getPDO();
+        echo \DB::connection()->getDatabaseName();
+        } catch (\Exception $e) {
+        echo 'None';
+    }
+?>
 	</body>
 </html>
