@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home', function () {
     return inertia('welcome');
 });
-Route::get('/', function () {
-    return response()->json([
-        'name' => 'Abigail',
-        'state' => 'CA',
-    ]);
-});
+// Route::get('/', function () {
+//     return response()->json([
+//         'name' => 'Abigail',
+//         'state' => 'CA',
+//     ]);
+// });
+
