@@ -2,22 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\ProductImage;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
-use \Illuminate\Http\Response;
+use Carbon\Carbon;
 
-class ProductController extends Controller
+class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        //
+        return response()->json(Coupon::all());
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAvailable()
+    {
+        return response()->json(Coupon::where('endon', '>=', Carbon::now())->get());
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -43,24 +53,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(Coupon $coupon)
     {
-        $product = Product::find($id)->first();
-        $images = ProductImage::where('idproduct', $id)->get();
-        $product->images =   $images;
-        return response()->json($product);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Coupon $coupon)
     {
         //
     }
@@ -69,10 +76,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Coupon $coupon)
     {
         //
     }
@@ -80,10 +87,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Coupon $coupon)
     {
         //
     }
