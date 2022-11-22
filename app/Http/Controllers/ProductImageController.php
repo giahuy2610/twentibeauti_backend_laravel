@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
-use \Illuminate\Http\Response;
 
-class ProductController extends Controller
+class ProductImageController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
         //
     }
@@ -43,24 +41,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\ProductImage  $productImage
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(ProductImage $productImage)
     {
-        $product = Product::find($id)->first();
-        $images = ProductImage::where('idproduct', $id)->get();
-        $product->images =   $images;
-        return response()->json($product);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\ProductImage  $productImage
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(ProductImage $productImage)
     {
         //
     }
@@ -69,10 +64,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\ProductImage  $productImage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, ProductImage $productImage)
     {
         //
     }
@@ -80,10 +75,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\ProductImage  $productImage
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(ProductImage $productImage)
     {
         //
     }

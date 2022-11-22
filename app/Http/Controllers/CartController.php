@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Exceptions\Handler;
+use App\Exceptions\InvalidOrderException;
+use App\Exceptions;
 
 class CartController extends Controller
 {
@@ -22,21 +26,21 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return response()->json(Cart::create(['idcus' => $request->idcus, 'idproduct' => $request->idproduct]));
+
+        // $idcus = $request->idcus;
+        // $idproduct = $request->idproduct;
+        // $quantity = $request->quantity;
+        // $cart = Cart::create([
+        //     'idcus' => $idcus,
+        //     'idproduct' => $idproduct,
+        //     'quantity' => $quantity,
+        // ]);
+        // return $cart;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -44,21 +48,12 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show(Cart $cart)
+    public function show(Request $request)
     {
-        //
+        $cartitems = DB::table('Cart')->join('Product', 'Cart.IDProduct', '=', 'Product.IDProduct')->where('idcus', $request->idcus)->get();
+        return response()->json($cartitems);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cart $cart)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +62,20 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request)
     {
-        //
+        //check if the product exists -> update
+        //else create new
+        $cart = Cart::where(['idcus' => $request->idcus, 'idproduct' => $request->idproduct]);
+        if ($cart->exists()) {
+            if ($request->newquantity > 0) {
+                return response()->json($cart->update(['quantity' => $request->newquantity]));
+            } else {
+                return $this->destroy($cart);
+            }
+        } else {
+            return $this->create($request);
+        }
     }
 
     /**
@@ -80,6 +86,6 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        return response()->json($cart->delete());
     }
 }
