@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Brand;
+
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 
@@ -48,10 +50,28 @@ class ProductController extends Controller
      */
     public function show(int $id)
     {
-        $product = Product::find($id)->first();
-        $images = ProductImage::where('idproduct', $id)->get();
-        $product->images =   $images;
+        $image = [];
+        $review = [];
+        // Lấy id 
+        $product = Product::find($id);
+        // Lấy pathImage trong ProductImage
+        $image_items = ProductImage::where('idproduct', $id)->get();
+        foreach($image_items as $item)
+        {
+            array_push($image,$item['Path']);
+        }
+        $product->Images =   $image;
+        
+        // Lấy ra brand 
+        $brand = Brand::where('idbrand', $product->IDBrand)->first();
+        if ($brand->IsDeleted == 0)
+        {
+            $brand = $brand->NameBrand;
+        }
+        $product->Brand =   $brand;
+
         return response()->json($product);
+
     }
 
     /**

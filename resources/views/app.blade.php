@@ -11,9 +11,9 @@
 <?php
     try {
         \DB::connection()->getPDO();
-        echo \DB::connection()->getDatabaseName();
+        dump('Database connected: ' . \DB::connection()->getDatabaseName());
         } catch (\Exception $e) {
-        echo 'None';
+		dump('Database connected: ' . 'None');
     }
 ?>
 	</body>
