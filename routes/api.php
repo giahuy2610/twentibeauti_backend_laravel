@@ -6,6 +6,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CollectionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,8 +38,23 @@ Route::group(['prefix' => 'coupon'], function () {
     //get all coupons in database which are available
     Route::get('available', [CouponController::class, 'indexAvailable'])->name('coupon.available');
 });
+Route::group(['prefix' => 'collection'], function () {
+    
+    // get a specific coupons in database
+    Route::get('show/{id?}', [CollectionController::class, 'show'])->name('collection.show');
+    //insert in database
+    Route::post('create', [CollectionController::class, 'create'])->name('collection.create');
+});
+Route::group(['prefix' => 'address'], function () {
+    
+    // get a specific products in database
+    Route::get('read/{id}', [AddressController::class, 'read'])->name('address.read');
 
 
+    //get all products in database
+    Route::post('index', [ProductController::class, 'index'])->name('product.index');
+});
+//
 Route::group(['prefix' => 'product'], function () {
     // add a new product
     Route::post('create', [ProductController::class, 'create'])->name('product.create');
@@ -50,6 +67,8 @@ Route::group(['prefix' => 'product'], function () {
 
     // get a specific products in database
     Route::get('show/{id}', [ProductController::class, 'show'])->name('product.show');
+
+    Route::get('read/{id}', [ProductController::class, 'read'])->name('product.read');
 
     //get all products in database
     Route::post('index', [ProductController::class, 'index'])->name('product.index');

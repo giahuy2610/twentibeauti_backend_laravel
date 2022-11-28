@@ -27,4 +27,7 @@ class CustomerController extends Controller
         //check matching
         return response()->json($cus);
     }
+    public function insert(Request $req) {
+        
+    }
 }

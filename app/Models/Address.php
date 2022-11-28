@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Collection extends Model
+class Address extends Model
 {
     use HasFactory;
-    protected $table = 'Collection';
-    protected $primaryKey = 'IDCollection';
+    protected $table = 'Address';
+    protected $primaryKey = 'IDAddress';
     protected $guarded = [];
     public $timestamps = false;
 }

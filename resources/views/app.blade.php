@@ -10,8 +10,8 @@
 		<strong>Database Connected: </strong>
 <?php
     try {
-        \DB::connection('mysql3')->getPDO();
-        echo \DB::connection('mysql3')->getDatabaseName();
+        \DB::connection('mysql')->getPDO();
+        echo \DB::connection('mysql')->getDatabaseName();
         } catch (\Exception $e) {
         echo $e;
     }

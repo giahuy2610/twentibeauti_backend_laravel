@@ -48,12 +48,20 @@ class ProductController extends Controller
      */
     public function show(int $id)
     {
-        $product = Product::find($id)->first();
-        $images = ProductImage::where('idproduct', $id)->get();
-        $product->images =   $images;
+        $product = Product::find($id);
+        //  $images = ProductImage::where('IDProduct', $id)->get();
+        //  $product->images =   $images;
         return response()->json($product);
     }
-
+    // public function read($id = null)
+    // {
+    //     if ($id==null) {
+    //         return Product::orderBy('NameProduct','asc')->get();
+    //     } else {
+    //         return Product::find($id);
+    //     }
+    //     return response()->json();
+    // }
     /**
      * Show the form for editing the specified resource.
      *
