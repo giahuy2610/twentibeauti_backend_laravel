@@ -15,7 +15,8 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    //'default' => env('DB_CONNECTION', 'mysql3'),
+    'default' => 'mysql3', // To change database
 
     /*
     |--------------------------------------------------------------------------
@@ -62,12 +63,12 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        
+
         'mysql3' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST_THIRD','localhost'),
-            'port'      => env('DB_PORT_THIRD'),
-            'database'  => env('DB_DATABASE_THIRD',''),
+            'port'      => env('DB_PORT_THIRD', '3306'),
+            'database'  => env('DB_DATABASE_THIRD','forge'),
             'username'  => env('DB_USERNAME_THIRD',''),
             'password'  => env('DB_PASSWORD_THIRD',''),
         ],

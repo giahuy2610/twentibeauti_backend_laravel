@@ -10,7 +10,13 @@
 		<strong>Database Connected: </strong>
 <?php
     try {
-        \DB::connection()->getPDO();
+        //\DB::purge();
+        //Config::set('database.connections.mysql3.database');
+
+
+        //dump(DB::connection('mysql3')->getDatabaseName());
+        \DB::reconnect();
+        \DB::connection('mysql3')->getPDO();
         dump('Database connected: ' . \DB::connection()->getDatabaseName());
         } catch (\Exception $e) {
 		dump('Database connected: ' . 'None');

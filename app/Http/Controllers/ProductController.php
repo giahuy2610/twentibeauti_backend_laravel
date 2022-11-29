@@ -52,7 +52,7 @@ class ProductController extends Controller
     {
         $image = [];
         $review = [];
-        // Lấy id 
+        // Lấy id
         $product = Product::find($id);
         // Lấy pathImage trong ProductImage
         $image_items = ProductImage::where('idproduct', $id)->get();
@@ -61,8 +61,8 @@ class ProductController extends Controller
             array_push($image,$item['Path']);
         }
         $product->Images =   $image;
-        
-        // Lấy ra brand 
+
+        // Lấy ra brand
         $brand = Brand::where('idbrand', $product->IDBrand)->first();
         if ($brand->IsDeleted == 0)
         {
