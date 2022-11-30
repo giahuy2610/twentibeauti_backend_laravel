@@ -10,10 +10,10 @@
 		<strong>Database Connected: </strong>
 <?php
     try {
-        \DB::connection('mysql')->getPDO();
-        echo \DB::connection('mysql')->getDatabaseName();
+        \DB::connection()->getPDO();
+        dump('Database connected: ' . \DB::connection()->getDatabaseName());
         } catch (\Exception $e) {
-        echo $e;
+		dump('Database connected: ' . 'None');
     }
 ?>
 	</body>
