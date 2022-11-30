@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\RetailPrice;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -48,9 +50,14 @@ class ProductController extends Controller
      */
     public function show(int $id)
     {
-        $product = Product::find($id)->first();
-        $images = ProductImage::where('idproduct', $id)->get();
-        $product->images =   $images;
+        $product = Product::find($id);
+        // $images = ProductImage::where('idproduct', $id)->get();
+        // $product->images =   $images;
+        $idbrand = $product->idbrand;
+        $brand = Brand::find($idbrand);
+
+
+        $product->brand = $brand;
         return response()->json($product);
     }
 
@@ -86,5 +93,18 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    /**
+     * 
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function search(string $value)
+    {
+        return response()->json(
+            DB::table('Product')->join('ProductImage', 'Product.IDProduct', '=', 'ProductImage.IDProduct')->whereLike('nameproduct', $value)->get()
+        );
     }
 }

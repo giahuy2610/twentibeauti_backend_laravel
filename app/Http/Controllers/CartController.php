@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\Handler;
 use App\Exceptions\InvalidOrderException;
 use App\Exceptions;
+use App\Models\ProductImage;
+use Illuminate\Support\Collection;
 
 class CartController extends Controller
 {
@@ -39,6 +41,7 @@ class CartController extends Controller
         //     'quantity' => $quantity,
         // ]);
         // return $cart;
+
     }
 
 
@@ -50,7 +53,14 @@ class CartController extends Controller
      */
     public function show(Request $request)
     {
-        $cartitems = DB::table('Cart')->join('Product', 'Cart.IDProduct', '=', 'Product.IDProduct')->where('idcus', $request->idcus)->get();
+        //get all products in cart
+        $cartitems = DB::table('Cart')->where('idcus', $request->IDCus)->get();
+
+        //loop each -> add first image of it as thumbnail and the oldest retailPrice as customer's price
+        foreach ($cartitems as $item) {
+            $item->{'image'} = ProductImage::where('idproduct', $item->id)->order('createon', 'desc')->first();
+        }
+
         return response()->json($cartitems);
     }
 

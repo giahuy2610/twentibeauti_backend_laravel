@@ -38,6 +38,7 @@ Route::group(['prefix' => 'coupon'], function () {
 });
 
 
+
 Route::group(['prefix' => 'product'], function () {
     // add a new product
     Route::post('create', [ProductController::class, 'create'])->name('product.create');
@@ -53,6 +54,9 @@ Route::group(['prefix' => 'product'], function () {
 
     //get all products in database
     Route::post('index', [ProductController::class, 'index'])->name('product.index');
+
+    //search for products by string
+    Route::get('search/{value}', [ProductController::class, 'search'])->name('product.search');
 });
 
 Route::group(['prefix' => 'cart'], function () {
