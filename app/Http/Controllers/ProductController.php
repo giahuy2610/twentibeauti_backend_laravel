@@ -51,7 +51,7 @@ class ProductController extends Controller
     public function show(int $id)
     {
         $image = [];
-        $review = [];
+        
         // Lấy id
         $product = Product::find($id);
         // Lấy pathImage trong ProductImage
@@ -73,7 +73,15 @@ class ProductController extends Controller
         return response()->json($product);
 
     }
-
+    // public function read($id = null)
+    // {
+    //     if ($id==null) {
+    //         return Product::orderBy('NameProduct','asc')->get();
+    //     } else {
+    //         return Product::find($id);
+    //     }
+    //     return response()->json();
+    // }
     /**
      * Show the form for editing the specified resource.
      *

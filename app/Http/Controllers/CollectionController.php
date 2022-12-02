@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class CollectionController extends Controller
 {
@@ -12,19 +14,49 @@ class CollectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    // public function show($id = null)
+    // {
+    //     if ($id==null) {
+    //         return Collection::orderBy('NameCollection','asc')->get();
+    //     } else {
+    //         return Collection::find($id);
+    //     }
+    //     return response()->json();
+    // }
+    public function show($id=null)
     {
-        //
+        if($id==null) {
+            return Collection::orderBy('NameCollection','asc')->get();
+        } else {
+            return Collection::find($id);
+        }
     }
-
+    // public function read(int $id) {
+    //     $collection=DB::table('Collection')->get();
+    //     foreach( $collection as )
+    // }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $req)
     {
-        //
+        try {
+            $collection = new Collection();
+            $collection->NameCollection= $req->input('NameCollection');
+            $collection->RoutePath= $req->input('RoutePath');
+            $collection->Description= $req->input('Description');
+            $collection->LogoImagePath= $req->input('LogoImagePath');
+            $collection->WallPaperPath= $req->input('WallPaperPath');
+            $collection->StartOn= $req->input('StartOn');
+            $collection->EndOn= $req->input('EndOn');
+            $collection->CoverImagePath= $req->input('CoverImagePath');
+            $collection->save();
+            return $collection;
+        } catch(Throwable $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -44,10 +76,7 @@ class CollectionController extends Controller
      * @param  \App\Models\Collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function show(Collection $collection)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
