@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 
@@ -53,15 +54,6 @@ class ProductController extends Controller
         //  $product->images =   $images;
         return response()->json($product);
     }
-    // public function read($id = null)
-    // {
-    //     if ($id==null) {
-    //         return Product::orderBy('NameProduct','asc')->get();
-    //     } else {
-    //         return Product::find($id);
-    //     }
-    //     return response()->json();
-    // }
     /**
      * Show the form for editing the specified resource.
      *

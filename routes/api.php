@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\ProductCollectionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -44,6 +45,15 @@ Route::group(['prefix' => 'collection'], function () {
     Route::get('show/{id?}', [CollectionController::class, 'show'])->name('collection.show');
     //insert in database
     Route::post('create', [CollectionController::class, 'create'])->name('collection.create');
+    //update db
+    Route::put('update/{id}', [CollectionController::class, 'update'])->name('collection.update');
+    //delete db
+    Route::delete('delete/{id}', [CollectionController::class, 'delete'])->name('collection.delete');
+});
+Route::group(['prefix' => 'productcollection'], function () {
+    
+    // get a specific coupons in database
+    Route::get('show/{id?}', [ProductCollectionController::class, 'show'])->name('productcollection.show');
 });
 Route::group(['prefix' => 'address'], function () {
     
