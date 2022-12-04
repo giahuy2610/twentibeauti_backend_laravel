@@ -26,7 +26,7 @@ class CollectionController extends Controller
     public function show($id=null)
     {
         if($id==null) {
-            return Collection::orderBy('NameCollection','asc')->get();
+            return Collection::orderBy('IDCollection','asc')->get();
         } else {
             return Collection::find($id);
         }
@@ -96,9 +96,27 @@ class CollectionController extends Controller
      * @param  \App\Models\Collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Collection $collection)
+    public function update(Request $req, $id)
     {
-        //
+        try {
+            $collection = Collection::find($id);
+            if($collection) {
+                $collection->NameCollection= $req->input('NameCollection');
+                $collection->RoutePath= $req->input('RoutePath');
+                $collection->Description= $req->input('Description');
+                $collection->LogoImagePath= $req->input('LogoImagePath');
+                $collection->WallPaperPath= $req->input('WallPaperPath');
+                $collection->StartOn= $req->input('StartOn');
+                $collection->EndOn= $req->input('EndOn');
+                $collection->CoverImagePath= $req->input('CoverImagePath');
+                $collection->save();
+                return $collection;
+            } else {
+                return 'Data not found';
+            }
+        } catch(Throwable $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -107,8 +125,18 @@ class CollectionController extends Controller
      * @param  \App\Models\Collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Collection $collection)
+    public function delete($id)
     {
-        //
+        try {
+            $collection = Collection::find($id);
+            if($collection) {
+                $collection->delete();
+                return $collection;
+            } else {
+                return 'Collection not found';
+            }
+        } catch (Throwable $e) {
+            return $e->getMessage();
+        }
     }
 }
