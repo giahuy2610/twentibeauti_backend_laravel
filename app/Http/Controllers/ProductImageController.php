@@ -8,78 +8,12 @@ use Illuminate\Http\Request;
 class ProductImageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the image of specified product
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public static function index(int $IDProduct)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProductImage  $productImage
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProductImage $productImage)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ProductImage  $productImage
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProductImage $productImage)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductImage  $productImage
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ProductImage $productImage)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ProductImage  $productImage
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ProductImage $productImage)
-    {
-        //
+        return (ProductImage::where('IDProduct', $IDProduct)->get());
     }
 }

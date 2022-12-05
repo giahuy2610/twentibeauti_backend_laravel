@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class ReviewImage extends Model
 {
     use HasFactory;
-    protected $table = 'Brand';
-    protected $primaryKey = 'IDBrand';
+    protected $table = 'ReviewImage';
+    protected $primaryKey = 'IDReviewImage';
     protected $guarded = [];
-    public $timestamps = false;
 }

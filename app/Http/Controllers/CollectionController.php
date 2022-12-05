@@ -9,32 +9,17 @@ use Throwable;
 
 class CollectionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function show($id = null)
-    // {
-    //     if ($id==null) {
-    //         return Collection::orderBy('NameCollection','asc')->get();
-    //     } else {
-    //         return Collection::find($id);
-    //     }
-    //     return response()->json();
-    // }
-    public function show($id=null)
+    public function show($id = null)
     {
-        if($id==null) {
-            return Collection::orderBy('IDCollection','asc')->get();
+        if ($id == null) {
+            return Collection::orderBy('IDCollection', 'asc')->get();
         } else {
-            return Collection::find($id);
+            $collection =  Collection::getCollectionDetailByID($id);
+            if ($collection == null) return response()->json('Collection is not found', 404);
+            else if ($collection->IsDeleted == true || $collection->StartOn > now() || $collection->EndOn < now()) return response()->json('Collection is not available', 400);
+            return response()->json($collection, 200);
         }
     }
-    // public function read(int $id) {
-    //     $collection=DB::table('Collection')->get();
-    //     foreach( $collection as )
-    // }
     /**
      * Show the form for creating a new resource.
      *
@@ -44,17 +29,16 @@ class CollectionController extends Controller
     {
         try {
             $collection = new Collection();
-            $collection->NameCollection= $req->input('NameCollection');
-            $collection->RoutePath= $req->input('RoutePath');
-            $collection->Description= $req->input('Description');
-            $collection->LogoImagePath= $req->input('LogoImagePath');
-            $collection->WallPaperPath= $req->input('WallPaperPath');
-            $collection->StartOn= $req->input('StartOn');
-            $collection->EndOn= $req->input('EndOn');
-            $collection->CoverImagePath= $req->input('CoverImagePath');
+            $collection->NameCollection = $req->input('NameCollection');
+            $collection->Description = $req->input('Description') ?? '';
+            $collection->LogoImagePath = $req->input('LogoImagePath') ?? '';
+            $collection->WallPaperPath = $req->input('WallPaperPath') ?? '';
+            $collection->StartOn = $req->input('StartOn') ?? now();
+            $collection->EndOn = $req->input('EndOn') ?? now();
+            $collection->CoverImagePath = $req->input('CoverImagePath') ?? "";
             $collection->save();
             return $collection;
-        } catch(Throwable $e) {
+        } catch (Throwable $e) {
             return $e->getMessage();
         }
     }
@@ -100,21 +84,21 @@ class CollectionController extends Controller
     {
         try {
             $collection = Collection::find($id);
-            if($collection) {
-                $collection->NameCollection= $req->input('NameCollection');
-                $collection->RoutePath= $req->input('RoutePath');
-                $collection->Description= $req->input('Description');
-                $collection->LogoImagePath= $req->input('LogoImagePath');
-                $collection->WallPaperPath= $req->input('WallPaperPath');
-                $collection->StartOn= $req->input('StartOn');
-                $collection->EndOn= $req->input('EndOn');
-                $collection->CoverImagePath= $req->input('CoverImagePath');
+            if ($collection) {
+                $collection->NameCollection = $req->input('NameCollection');
+                $collection->RoutePath = $req->input('RoutePath');
+                $collection->Description = $req->input('Description');
+                $collection->LogoImagePath = $req->input('LogoImagePath');
+                $collection->WallPaperPath = $req->input('WallPaperPath');
+                $collection->StartOn = $req->input('StartOn');
+                $collection->EndOn = $req->input('EndOn');
+                $collection->CoverImagePath = $req->input('CoverImagePath');
                 $collection->save();
                 return $collection;
             } else {
                 return 'Data not found';
             }
-        } catch(Throwable $e) {
+        } catch (Throwable $e) {
             return $e->getMessage();
         }
     }
@@ -129,7 +113,7 @@ class CollectionController extends Controller
     {
         try {
             $collection = Collection::find($id);
-            if($collection) {
+            if ($collection) {
                 $collection->delete();
                 return $collection;
             } else {

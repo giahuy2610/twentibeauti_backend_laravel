@@ -12,4 +12,9 @@ class ProductImage extends Model
     protected $primaryKey = 'IDProductImage';
     protected $guarded = [];
     public $timestamps = false;
+
+    public static function getAllImagesOfProduct(int $IDProduct)
+    {
+        return (ProductImage::select('Path')->where('IDProduct', $IDProduct)->get());
+    }
 }

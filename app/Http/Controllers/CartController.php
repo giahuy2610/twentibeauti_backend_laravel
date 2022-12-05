@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\Handler;
 use App\Exceptions\InvalidOrderException;
 use App\Exceptions;
+use App\Models\Product;
 
 class CartController extends Controller
 {
@@ -28,17 +29,11 @@ class CartController extends Controller
      */
     public function create(Request $request)
     {
-        return response()->json(Cart::create(['idcus' => $request->idcus, 'idproduct' => $request->idproduct]));
-
-        // $idcus = $request->idcus;
-        // $idproduct = $request->idproduct;
-        // $quantity = $request->quantity;
-        // $cart = Cart::create([
-        //     'idcus' => $idcus,
-        //     'idproduct' => $idproduct,
-        //     'quantity' => $quantity,
-        // ]);
-        // return $cart;
+        $product = Product::find($request->IDProduct);
+        if ($product == null) return response()->json('Product not found', 404);
+        else if ($product->IsDeleted == true || $product->Stock == 0) return response()->json('Product not available to buy', 400);
+        Cart::create(['idcus' => $request->IDCus, 'idproduct' => $request->IDProduct]);
+        return $this->show($request);
     }
 
 
@@ -50,8 +45,14 @@ class CartController extends Controller
      */
     public function show(Request $request)
     {
-        $cartitems = DB::table('Cart')->join('Product', 'Cart.IDProduct', '=', 'Product.IDProduct')->where('idcus', $request->idcus)->get();
-        return response()->json($cartitems);
+        $data = [];
+        $cartitems = DB::table('Cart')->where('idcus', $request->IDCus)->get();
+        foreach ($cartitems as $product) {
+            $productDetail = Product::getProductDetailByID($product->IDProduct);
+            $productDetail->Quantity = $product->Quantity;
+            array_push($data, $productDetail);
+        }
+        return response()->json($data);
     }
 
 
@@ -66,15 +67,24 @@ class CartController extends Controller
     {
         //check if the product exists -> update
         //else create new
-        $cart = Cart::where(['idcus' => $request->idcus, 'idproduct' => $request->idproduct]);
-        if ($cart->exists()) {
-            if ($request->newquantity > 0) {
-                return response()->json($cart->update(['quantity' => $request->newquantity]));
+        $cart = Cart::where('IDCus', $request->IDCus)->where('IDProduct', $request->IDProduct)->first();
+        if ($cart != null) {
+            if ($request->IsAdd == 1) {
+                $cart->where('IDCus', $request->IDCus)->where('IDProduct', $request->IDProduct)->update(['Quantity' => $cart->Quantity + 1]);
+                return $this->show($request);
             } else {
-                return $this->destroy($cart);
+                if ($cart->Quantity - 1 > 0) {
+                    $cart->where('IDCus', $request->IDCus)->where('IDProduct', $request->IDProduct)->update(['Quantity' => $cart->Quantity - 1]);
+                    return $this->show($request);
+                } else {
+                    $cart->where('IDCus', $request->IDCus)->where('IDProduct', $request->IDProduct)->delete();
+                    return $this->show($request);
+                }
             }
         } else {
-            return $this->create($request);
+            if ($request->IsAdd)
+                return $this->create($request);
+            else return response()->json('Product not found', 404);
         }
     }
 
@@ -84,8 +94,9 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cart $cart)
+    public function destroy(Request $request)
     {
-        return response()->json($cart->delete());
+        Cart::where('IDCus', $request->IDCus)->where('IDProduct', $request->IDProduct)->delete();
+        return $this->show($request);
     }
 }

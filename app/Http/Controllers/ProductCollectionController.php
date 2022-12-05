@@ -27,31 +27,30 @@ class ProductCollectionController extends Controller
     //         }
     //     return response()->json($product);
     // }
-    public function show (int $id) {
-        $collections = Collection::where('IDCollection',$id)->get();
-        $productlist=array();
-        foreach ($collections as $col ){
-            // $product=Product::select('NameProduct','IDProduct','ListPrice')->find($col['IDProduct']);
-            // $product = CollectionProduct::where('IDProduct',$id)->get();
-            // $product= DB::select('SELECT p.IDProduct, p.NameProduct from `Product` p JOIN `CollectionProduct` c ON p.IDProduct=d.IDProduct WHERE c.IDCollection='.$col->id);
-            $product=DB::table('Product')
-                        ->join('CollectionProduct','Product.IDProduct','=','CollectionProduct.IDProduct')
-                        ->where('CollectionProduct.IDCollection','=',$id)
-                        ->get();
-            // $x = ProductImage::where('IDProduct',$col['IDProduct'])->first()['Path'];
-            $object=
-            [
-                'IDCollection' => $col->IDCollection,
-                'NameCollection'=> $col->NameCollection,
-                'Description'=>$col->Description,
-                'LogoImagePath'=>$col->LogoImagePath,
-                'WallPaperPath'=>$col->WallPaperPath,
-                'Product'=>$product
-            ];
-            array_push($productlist,$object);
+    public function show(int $id)
+    {
+        $collections = Collection::where('IDCollection', $id)->get();
+        $productlist = array();
+        foreach ($collections as $col) {
+            $product = DB::table('Product')
+                ->join('CollectionProduct', 'Product.IDProduct', '=', 'CollectionProduct.IDProduct')
+                ->where('CollectionProduct.IDCollection', '=', $id)
+                ->get();
+
+            $object =
+                [
+                    'IDCollection' => $col->IDCollection,
+                    'NameCollection' => $col->NameCollection,
+                    'Description' => $col->Description,
+                    'LogoImagePath' => $col->LogoImagePath,
+                    'WallPaperPath' => $col->WallPaperPath,
+                    'Product' => $product
+                ];
+            array_push($productlist, $object);
         }
         return response()->json($productlist);
     }
+
     public function create(Request $req)
     {
         try {
@@ -151,4 +150,7 @@ class ProductCollectionController extends Controller
             return $e->getMessage();
         }
     }
+
+
+
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Coupon;
+use App\Models\ImageSlider;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class CouponController extends Controller
+class ImageSliderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,19 +15,8 @@ class CouponController extends Controller
      */
     public function index()
     {
-        return response()->json(Coupon::all());
+        //
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexAvailable()
-    {
-        return response()->json(Coupon::where('IsDeleted', '=', 0)->where('EndOn', '>=', Carbon::now())->where('StartOn', '<=', Carbon::now())->where('Stock', '>', 0)->get());
-    }
-
 
     /**
      * Show the form for creating a new resource.
@@ -53,10 +42,10 @@ class CouponController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Coupon  $coupon
+     * @param  \App\Models\ImageSlider  $imageSlider
      * @return \Illuminate\Http\Response
      */
-    public function show(Coupon $coupon)
+    public function show(ImageSlider $imageSlider)
     {
         //
     }
@@ -64,10 +53,10 @@ class CouponController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Coupon  $coupon
+     * @param  \App\Models\ImageSlider  $imageSlider
      * @return \Illuminate\Http\Response
      */
-    public function edit(Coupon $coupon)
+    public function edit(ImageSlider $imageSlider)
     {
         //
     }
@@ -76,10 +65,10 @@ class CouponController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Coupon  $coupon
+     * @param  \App\Models\ImageSlider  $imageSlider
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Coupon $coupon)
+    public function update(Request $request, ImageSlider $imageSlider)
     {
         //
     }
@@ -87,11 +76,17 @@ class CouponController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Coupon  $coupon
+     * @param  \App\Models\ImageSlider  $imageSlider
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Coupon $coupon)
+    public function destroy(ImageSlider $imageSlider)
     {
         //
+    } 
+
+    public function getAvailable()
+    {
+        $data = ImageSlider::where('IsDeleted', '=', 0)->where('EndOn', '>=', Carbon::now())->where('StartOn', '<=', Carbon::now())->get();
+        return response()->json($data, 200);
     }
 }

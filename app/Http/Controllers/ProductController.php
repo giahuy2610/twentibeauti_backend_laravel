@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Brand;
+use App\Models\Review;
+use App\Models\RetailPrice;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 
@@ -15,9 +17,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        //
+        $data = [];
+        $products = Product::get();
+        foreach ($products as $product) {
+            $productDetail = Product::getProductDetailByID($product->IDProduct);
+            array_push($data, $productDetail);
+        }
+        return response()->json($data, 200);
     }
 
     /**
@@ -101,5 +109,14 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function getProduct(int $IDProduct)
+    {
+        //get everything belong to this product
+        $product = Product::getProductDetailByID($IDProduct);
+        if ($product == null) return response()->json('Product is not found', 404);
+        else if ($product->IsDeleted == true) return response()->json('Product is deleted', 400);
+        return response()->json($product, 200);
     }
 }
