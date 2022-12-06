@@ -35,8 +35,10 @@ class ProductCollectionController extends Controller
             // $product = CollectionProduct::where('IDProduct',$id)->get();
             // $product= DB::select('SELECT p.IDProduct, p.NameProduct from `Product` p JOIN `CollectionProduct` c ON p.IDProduct=d.IDProduct WHERE c.IDCollection='.$col->id);
             $product=DB::table('Product')
+                        ->select('NameProduct','Description','ListPrice')
                         ->join('CollectionProduct','Product.IDProduct','=','CollectionProduct.IDProduct')
                         ->where('CollectionProduct.IDCollection','=',$id)
+                        ->where('Product.IsDeleted','=','0')
                         ->get();
             // $x = ProductImage::where('IDProduct',$col['IDProduct'])->first()['Path'];
             $object=
@@ -55,7 +57,7 @@ class ProductCollectionController extends Controller
     public function create(Request $req)
     {
         try {
-            $collection = new Collection();
+            $collection = new CollectionProduct();
             $collection->NameCollection = $req->input('NameCollection');
             $collection->RoutePath = $req->input('RoutePath');
             $collection->Description = $req->input('Description');
