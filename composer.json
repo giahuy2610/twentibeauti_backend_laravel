@@ -16,6 +16,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "nesbot/carbon": "^2.64",
         "pestphp/pest": "^1.22",
         "pestphp/pest-plugin-laravel": "^1.2"
     },
