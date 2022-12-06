@@ -13,6 +13,9 @@ use App\Http\Controllers\RetailPriceController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ImageSliderController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\TypeProductController;
+use App\Http\Controllers\TagController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -126,4 +129,22 @@ Route::group(['prefix' => 'review'], function () {
 Route::group(['prefix' => 'image-slider'], function () {
     // the reviews(included images of each) of specified product -- done - huy
     Route::get('available', [ImageSliderController::class, 'getAvailable'])->name('imageslider.index');
+});
+
+Route::group(['prefix' => 'brand'], function () {
+    // get all brand info -- done - huy
+    Route::get('index', [BrandController::class, 'index'])->name('brand.index');
+});
+
+Route::group(['prefix' => 'tag'], function () {
+    // // get all tag info -- done - huy
+    // Route::get('index', [TagController::class, 'index'])->name('tag.index');
+
+    // get all tag info by typeid-- done - huy
+    Route::get('index/{id?}', [TagController::class, 'index'])->name('tag.index');
+});
+
+Route::group(['prefix' => 'type'], function () {
+    // get all typeProduct info -- done - huy
+    Route::get('index', [TypeProductController::class, 'index'])->name('typeProduct.index');
 });

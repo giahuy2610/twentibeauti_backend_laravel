@@ -9,6 +9,7 @@ use App\Models\Review;
 use App\Models\RetailPrice;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
+use Throwable;
 
 class ProductController extends Controller
 {
@@ -33,9 +34,27 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        try {
+            $product = new Product();
+            $product->NameProduct = $request->NameProduct;
+            $product->IDBrand = $request->IDBrand;
+            $product->Description = $request->Description;
+            $product->Stock = $request->Stock;
+            $product->Mass = $request->Mass;
+            $product->UnitsOfMass = $request->UnitsOfMass;
+            $product->Units = $request->Units;
+            $product->ApplyTaxes = $request->ApplyTaxes;
+            $product->StatusSale = $request->StatusSale;
+            $product->ListPrice = $request->ListPrice;
+            $product->IDType = $request->IDType;
+            $product->IDTag = $request->IDTag;
+            $product->save();
+            return response()->json($product, 200);
+        } catch (Throwable $e) {
+            return response()->json($e->getMessage(), 400);
+        }
     }
 
     /**
@@ -95,9 +114,27 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request)
     {
-        //
+        try {
+            $product = Product::find($request->IDProduct);
+            $product->NameProduct = $request->NameProduct;
+            $product->IDBrand = $request->IDBrand;
+            $product->Description = $request->Description;
+            $product->Stock = $request->Stock;
+            $product->Mass = $request->Mass;
+            $product->UnitsOfMass = $request->UnitsOfMass;
+            $product->Units = $request->Units;
+            $product->ApplyTaxes = $request->ApplyTaxes;
+            $product->StatusSale = $request->StatusSale;
+            $product->ListPrice = $request->ListPrice;
+            $product->IDType = $request->IDType;
+            $product->IDTag = $request->IDTag;
+            $product->save();
+            return response()->json($product, 200);
+        } catch (Throwable $e) {
+            return response()->json($e->getMessage(), 400);
+        }
     }
 
     /**

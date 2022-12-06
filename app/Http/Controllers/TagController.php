@@ -2,19 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Throwable;
 
-class BrandController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id = null)
     {
-        return response()->json(Brand::all(), 200);
+        if ($id == null)
+            return response()->json(Tag::all(), 200);
+        else {
+            try {
+                return response()->json(Tag::where('IDType',$id)->get(), 200);
+            } catch (Throwable $e) {
+                return response()->json($e->getMessage(), 400);
+            }
+        }
     }
 
     /**
@@ -41,10 +50,10 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show(Tag $tag)
     {
         //
     }
@@ -52,10 +61,10 @@ class BrandController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function edit(Brand $brand)
+    public function edit(Tag $tag)
     {
         //
     }
@@ -64,10 +73,10 @@ class BrandController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(Request $request, Tag $tag)
     {
         //
     }
@@ -75,10 +84,10 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy(Tag $tag)
     {
         //
     }
