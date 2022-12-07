@@ -94,4 +94,12 @@ class CouponController extends Controller
     {
         //
     }
+
+    public function checkAvailableOfCode($CodeCoupon)
+    {
+        $coupon = Coupon::where('CodeCoupon', $CodeCoupon)->first();
+        if ($coupon == null) return response()->json('Mã giảm giá không tồn tại', 404);
+        else if ($coupon->Stock == 0 || $coupon->EndOn < now() || $coupon->StartOn > now()) return response()->json('Not available now (out of stock, expired..etc...', 400);
+        else return response()->json($coupon, 200);
+    }
 }

@@ -131,6 +131,18 @@ class ProductController extends Controller
             $product->IDType = $request->IDType;
             $product->IDTag = $request->IDTag;
             $product->save();
+
+            //handle image product
+            $images = ProductImage::where('IDProduct', $request->IDProduct)->get()->each(function ($image, $key) {
+                $image->delete();
+            });
+            foreach ($request->Images as $imageURL) {
+                $new = new ProductImage();
+                $new->IDProduct = $request->IDProduct;
+                $new->Path = $imageURL;
+                $new->save();
+            }
+
             return response()->json($product, 200);
         } catch (Throwable $e) {
             return response()->json($e->getMessage(), 400);
@@ -155,5 +167,16 @@ class ProductController extends Controller
         if ($product == null) return response()->json('Product is not found', 404);
         else if ($product->IsDeleted == true) return response()->json('Product is deleted', 400);
         return response()->json($product, 200);
+    }
+
+    public function searchProductByKey($KeySearch)
+    {
+        $products = Product::select('IDProduct')->where('NameProduct', 'LIKE', '%' . $KeySearch . '%')->get();
+        $data = [];
+        foreach ($products as $product) {
+            $productDetail = Product::getProductDetailByID($product->IDProduct);
+            array_push($data, $productDetail);
+        }
+        return response()->json($data, 200);
     }
 }

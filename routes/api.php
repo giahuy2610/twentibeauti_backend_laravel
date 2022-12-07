@@ -16,6 +16,7 @@ use App\Http\Controllers\ImageSliderController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\TypeProductController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\InvoiceController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,6 +46,9 @@ Route::group(['prefix' => 'coupon'], function () {
 
     //get all coupons in database which are available
     Route::get('available', [CouponController::class, 'indexAvailable'])->name('coupon.available');
+
+    //check available all info of specific coupon code
+    Route::get('check-available/{code}', [CouponController::class, 'checkAvailableOfCode'])->name('coupon.checkAvailableOfCode');
 });
 Route::group(['prefix' => 'collection'], function () {
 
@@ -89,6 +93,9 @@ Route::group(['prefix' => 'product'], function () {
 
     //get all products in database -- done - huy
     Route::get('index', [ProductController::class, 'index'])->name('product.index');
+
+    //get all products like input search key string in database -- done - huy
+    Route::get('search/{key?}', [ProductController::class, 'searchProductByKey'])->name('product.searchProductByKey');
 });
 
 Route::group(['prefix' => 'cart'], function () {
@@ -104,7 +111,7 @@ Route::group(['prefix' => 'cart'], function () {
     // get all products in cart -- done - huy
     Route::post('show', [CartController::class, 'show'])->name('cart.show');
 });
-
+// get all products in cart -- done - huy
 Route::post('login', [CustomerController::class, 'getLogin'])->name('login.get');
 
 
@@ -137,9 +144,6 @@ Route::group(['prefix' => 'brand'], function () {
 });
 
 Route::group(['prefix' => 'tag'], function () {
-    // // get all tag info -- done - huy
-    // Route::get('index', [TagController::class, 'index'])->name('tag.index');
-
     // get all tag info by typeid-- done - huy
     Route::get('index/{id?}', [TagController::class, 'index'])->name('tag.index');
 });
@@ -147,4 +151,20 @@ Route::group(['prefix' => 'tag'], function () {
 Route::group(['prefix' => 'type'], function () {
     // get all typeProduct info -- done - huy
     Route::get('index', [TypeProductController::class, 'index'])->name('typeProduct.index');
+});
+
+Route::group(['prefix' => 'customer'], function () {
+    // get customer info -- done - huy
+    Route::get('show/{IDCus?}', [CustomerController::class, 'show'])->name('customer.show');
+});
+
+Route::group(['prefix' => 'invoice'], function () {
+    // get invoice info -- done - huy
+    Route::get('show/{IDInvoice?}', [InvoiceController::class, 'show'])->name('invoice.show');
+
+    // create invoice info -- done - huy
+    Route::post('create', [InvoiceController::class, 'show'])->name('invoice.create');
+
+    // get invoice of customer-- done - huy
+    Route::get('customer/{IDCustomer}', [InvoiceController::class, 'invoiceOfCustomer'])->name('invoice.invoiceOfCustomer');
 });

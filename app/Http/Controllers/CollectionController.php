@@ -37,7 +37,16 @@ class CollectionController extends Controller
             $collection->EndOn = $req->input('EndOn') ?? now();
             $collection->CoverImagePath = $req->input('CoverImagePath') ?? "";
             $collection->save();
-            return $collection;
+            // return $collection;
+
+            //insert products into collection
+            foreach ($req->Products as $product) {
+                $collectionProduct = DB::table('CollectionProduct')->insert(
+                    ['IDCollection' =>  $collection->IDCollection, 'IDProduct' => $product]
+                );
+            }
+            $collection->Products = DB::table('CollectionProduct')->where('IDCollection', $collection->IDCollection)->get();
+            return  $collection;
         } catch (Throwable $e) {
             return $e->getMessage();
         }
