@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CollectionProduct extends Model
+class Invoice extends Model
 {
     use HasFactory;
-    protected $table = 'CollectionProduct';
+    protected $table = 'Invoice';
+    protected $primaryKey = 'IDInvoice';
     protected $guarded = [];
     public $timestamps = false;
 }

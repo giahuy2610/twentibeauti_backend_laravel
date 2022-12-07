@@ -27,7 +27,7 @@ class CustomerController extends Controller
         //check matching
         return response()->json($cus);
     }
-    public function insert(Request $req) {
-        
+    public function show($IDCus) {
+        return response()->json(Customer::find($IDCus));
     }
 }
