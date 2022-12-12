@@ -34,9 +34,20 @@ class CouponController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $coupon = new Coupon();
+        $coupon->ValueDiscount = $request->ValueDiscount;
+        $coupon->StartOn = $request->StartOn;
+        $coupon->EndOn = $request->EndOn;
+        $coupon->Description = $request->Description;
+        $coupon->MinInvoiceValue = $request->MinInvoiceValue;
+        $coupon->CodeCoupon = $request->CodeCoupon;
+        $coupon->Quantity = $request->Quantity;
+        $coupon->Stock = $request->Quantity;
+        $coupon->IsMutualEvent = $request->IsMutualEvent;
+        $coupon->save();
+        return response()->json($coupon, 200);
     }
 
     /**
@@ -56,9 +67,11 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function show(Coupon $coupon)
+    public function show($IDCoupon)
     {
-        //
+        $data =  Coupon::find($IDCoupon);
+        if ($data == null) return response()->json('Not found', 404);
+        return response()->json($data, 200);
     }
 
     /**

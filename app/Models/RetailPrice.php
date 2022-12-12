@@ -12,6 +12,7 @@ class RetailPrice extends Model
     protected $table = 'RetailPrice';
     protected $primaryKey = 'IDRetailPrice';
     protected $guarded = [];
+    public $timestamps = false;
 
     public static function index(int $IDProduct)
     {
@@ -26,6 +27,8 @@ class RetailPrice extends Model
      */
     public static function showCurrent(int $IDProduct)
     {
-        return RetailPrice::where('IDProduct', $IDProduct)->Where('StartOn', '<=', Carbon::now())->Where('EndOn', '>=', Carbon::now())->first();
+        $retailPrice = RetailPrice::select('Price')->where('IDProduct', $IDProduct)->Where('StartOn', '<=', Carbon::now())->Where('EndOn', '>=', Carbon::now())->first();
+        if ($retailPrice == null) return $retailPrice;
+        return $retailPrice->Price;
     }
 }

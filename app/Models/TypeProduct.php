@@ -11,4 +11,5 @@ class TypeProduct extends Model
     protected $table = 'TypeProduct';
     protected $primaryKey = 'IDType';
     protected $guarded = [];
+    public $timestamps = false;
 }

@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class PromotionRegister extends Model
 {
     use HasFactory;
-    protected $table = 'Tag';
-    protected $primaryKey = 'IDTag';
+
+    protected $table = 'PromotionRegister';
+    protected $primaryKey = 'IDRegister';
     protected $guarded = [];
     public $timestamps = false;
 }

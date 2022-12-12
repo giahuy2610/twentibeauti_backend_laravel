@@ -17,6 +17,9 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\TypeProductController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PromotionRegisterController;
+use App\Http\Controllers\EventController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,7 +32,7 @@ use App\Http\Controllers\InvoiceController;
 */
 
 Route::group(['prefix' => 'coupon'], function () {
-    // add a new coupon
+    // add a new coupon -- done
     Route::post('create', [CouponController::class, 'create'])->name('coupon.create');
 
     // update coupon
@@ -42,7 +45,7 @@ Route::group(['prefix' => 'coupon'], function () {
     Route::get('show/{id}', [CouponController::class, 'show'])->name('coupon.show');
 
     //get all coupons in database
-    Route::post('index', [CouponController::class, 'index'])->name('coupon.index');
+    Route::get('index', [CouponController::class, 'index'])->name('coupon.index');
 
     //get all coupons in database which are available
     Route::get('available', [CouponController::class, 'indexAvailable'])->name('coupon.available');
@@ -163,8 +166,40 @@ Route::group(['prefix' => 'invoice'], function () {
     Route::get('show/{IDInvoice?}', [InvoiceController::class, 'show'])->name('invoice.show');
 
     // create invoice info -- done - huy
-    Route::post('create', [InvoiceController::class, 'show'])->name('invoice.create');
+    Route::post('create', [InvoiceController::class, 'create'])->name('invoice.create');
 
     // get invoice of customer-- done - huy
     Route::get('customer/{IDCustomer}', [InvoiceController::class, 'invoiceOfCustomer'])->name('invoice.invoiceOfCustomer');
+
+    //count number of invoice in range -- done -huy
+    Route::get('count', [InvoiceController::class, 'countInvoiceInRange'])->name('invoice.countInvoiceInRange');
 });
+
+Route::group(['prefix' => 'promotion'], function () {
+    // get all register info -- done - huy
+    Route::get('index', [PromotionRegisterController::class, 'index'])->name('promotion.index');
+    // create promotion register -- done - huy
+    Route::post('create', [PromotionRegisterController::class, 'create'])->name('promotion.create');
+});
+
+
+Route::group(['prefix' => 'event'], function () {
+    // get all event info -- done - huy
+    Route::get('index', [EventController::class, 'index'])->name('event.index');
+
+    // get a specified event info -- done - huy
+    Route::get('show/{IDEvent}', [EventController::class, 'show'])->name('event.show');
+
+    // create event  -- done - huy
+    Route::post('create', [EventController::class, 'create'])->name('event.create');
+});
+
+// Route::get('send-mail', function () {
+   
+//     $details = [
+//         'title' => 'Mail from ItSolutionStuff.com',
+//         'body' => 'This is for testing email using smtp'
+//     ];
+   
+//     Mail::to('giahuytrinh.26102002@gmail.com')->send(new \App\Mail\TWENTIMAIL($details));
+// });
