@@ -11,6 +11,7 @@ class Review extends Model
     protected $table = 'Review';
     protected $primaryKey = 'IDReview';
     protected $guarded = [];
+    public $timestamps = false;
 
     public static function getAllReviewsOfProduct(int $IDProduct)
     {

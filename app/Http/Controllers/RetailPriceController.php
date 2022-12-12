@@ -14,4 +14,8 @@ class RetailPriceController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function showCurrent($IDProduct)
+    {
+        return response()->json(RetailPrice::showCurrent($IDProduct));
+    }
 }

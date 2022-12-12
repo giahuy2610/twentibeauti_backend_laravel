@@ -11,4 +11,5 @@ class ReviewImage extends Model
     protected $table = 'ReviewImage';
     protected $primaryKey = 'IDReviewImage';
     protected $guarded = [];
+    public $timestamps = false;
 }
