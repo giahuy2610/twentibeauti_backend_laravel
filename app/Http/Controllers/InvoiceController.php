@@ -198,4 +198,13 @@ class InvoiceController extends Controller
         $count = $invoices->count();
         return response()->json($count, 200);
     }
+
+    public function changeTracking(Request $request)
+    {
+        $invoice = Invoice::find($request->IDInvoice);
+        if ($invoice == null) return response()->json($request->IDInvoice, 404);
+        $invoice->IDTracking = $request->IDTracking;
+        $invoice->save();
+        return response()->json($invoice);
+    }
 }

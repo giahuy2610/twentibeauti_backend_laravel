@@ -173,6 +173,9 @@ Route::group(['prefix' => 'invoice'], function () {
 
     //count number of invoice in range -- done -huy
     Route::get('count', [InvoiceController::class, 'countInvoiceInRange'])->name('invoice.countInvoiceInRange');
+
+    //change idtracking of invoice
+    Route::put('tracking-status', [InvoiceController::class, 'changeTracking'])->name('invoice.changeTracking');
 });
 
 Route::group(['prefix' => 'promotion'], function () {
