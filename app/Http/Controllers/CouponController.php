@@ -80,22 +80,23 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function edit(Coupon $coupon)
+    public function update(Request $request)
     {
-        //
+        $coupon = Coupon::find($request->IDCoupon);
+        $coupon->ValueDiscount = $request->ValueDiscount;
+        $coupon->StartOn = $request->StartOn;
+        $coupon->EndOn = $request->EndOn;
+        $coupon->Description = $request->Description;
+        $coupon->MinInvoiceValue = $request->MinInvoiceValue;
+        $coupon->CodeCoupon = $request->CodeCoupon;
+        $coupon->Quantity = $request->Quantity;
+        $coupon->Stock = $request->Quantity;
+        $coupon->IsMutualEvent = $request->IsMutualEvent;
+        $coupon->save();
+        return response()->json($coupon, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Coupon  $coupon
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Coupon $coupon)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.
