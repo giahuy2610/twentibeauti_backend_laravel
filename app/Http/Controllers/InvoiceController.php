@@ -78,8 +78,6 @@ class InvoiceController extends Controller
                 );
             }
 
-            //check payment method and status
-
             //minus quantity of products
             $totalValue = 0;
             foreach ($request->InvoiceDetail as $product) {
