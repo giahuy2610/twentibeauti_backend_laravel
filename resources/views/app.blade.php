@@ -11,7 +11,7 @@
 <?php
     try {
         \DB::connection()->getPDO();
-        dump('Database connected: ' . \DB::connection()->getDatabaseName());
+        dump('Database connected: ' . \DB::connection('mysql')->getDatabaseName());
         } catch (\Exception $e) {
 		dump('Database connected: ' . 'None');
     }
