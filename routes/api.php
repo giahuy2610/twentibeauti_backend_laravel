@@ -35,8 +35,8 @@ Route::group(['prefix' => 'coupon'], function () {
     // add a new coupon -- done
     Route::post('create', [CouponController::class, 'create'])->name('coupon.create');
 
-    // update coupon
-    Route::post('update', [CouponController::class, 'update'])->name('coupon.update');
+    // update coupon -- done - huy
+    Route::put('update', [CouponController::class, 'update'])->name('coupon.update');
 
     // remove a coupon
     Route::post('destroy', [CouponController::class, 'destroy'])->name('coupon.destroy');
@@ -173,6 +173,9 @@ Route::group(['prefix' => 'invoice'], function () {
 
     //count number of invoice in range -- done -huy
     Route::get('count', [InvoiceController::class, 'countInvoiceInRange'])->name('invoice.countInvoiceInRange');
+
+    //change idtracking of invoice
+    Route::put('tracking-status', [InvoiceController::class, 'changeTracking'])->name('invoice.changeTracking');
 });
 
 Route::group(['prefix' => 'promotion'], function () {
@@ -192,14 +195,20 @@ Route::group(['prefix' => 'event'], function () {
 
     // create event  -- done - huy
     Route::post('create', [EventController::class, 'create'])->name('event.create');
+
+    // update event  -- done - huy
+    Route::put('update', [EventController::class, 'update'])->name('event.update');
 });
 
 // Route::get('send-mail', function () {
-   
+
 //     $details = [
 //         'title' => 'Mail from ItSolutionStuff.com',
 //         'body' => 'This is for testing email using smtp'
 //     ];
-   
+
 //     Mail::to('giahuytrinh.26102002@gmail.com')->send(new \App\Mail\TWENTIMAIL($details));
 // });
+
+Route::get('test', [InvoiceController::class, 'pay'])->name('test');
+Route::get('vnpay-return', [InvoiceController::class, 'vnpayReturn'])->name('vnpay-return');
