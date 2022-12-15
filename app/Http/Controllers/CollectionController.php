@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collection;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 use Throwable;
 
 class CollectionController extends Controller
@@ -25,17 +28,22 @@ class CollectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function getdate() {
+        $date=new DateTime();
+        echo $date->format("yy-mm");
+    }
     public function create(Request $req)
     {
         try {
             $collection = new Collection();
             $collection->NameCollection = $req->input('NameCollection');
-            $collection->Description = $req->input('Description') ?? '';
-            $collection->LogoImagePath = $req->input('LogoImagePath') ?? '';
-            $collection->WallPaperPath = $req->input('WallPaperPath') ?? '';
-            $collection->StartOn = $req->input('StartOn') ?? now();
-            $collection->EndOn = $req->input('EndOn') ?? now();
-            $collection->CoverImagePath = $req->input('CoverImagePath') ?? "";
+            $collection->Description = $req->input('Description');
+            $collection->LogoImagePath = $req->input('LogoImagePath');
+            $collection->WallPaperPath = $req->input('WallPaperPath');
+            // $collection->StartOn=$req->input('StartOn')->format('y-m-d H:i:s'); 
+            $collection->StartOn= Carbon::parse($req->StartOn)->format('y-m-d H:i:s'); 
+            $collection->EndOn = Carbon::parse($req->EndOn)->format('y-m-d H:i:s'); 
+            $collection->CoverImagePath = $req->input('CoverImagePath');
             $collection->save();
             // return $collection;
 
@@ -99,8 +107,8 @@ class CollectionController extends Controller
                 $collection->Description = $req->input('Description');
                 $collection->LogoImagePath = $req->input('LogoImagePath');
                 $collection->WallPaperPath = $req->input('WallPaperPath');
-                $collection->StartOn = $req->input('StartOn');
-                $collection->EndOn = $req->input('EndOn');
+                $collection->StartOn= Carbon::parse($req->StartOn)->format('y-m-d H:i:s'); 
+                $collection->EndOn = Carbon::parse($req->EndOn)->format('y-m-d H:i:s'); 
                 $collection->CoverImagePath = $req->input('CoverImagePath');
                 $collection->save();
                 return $collection;

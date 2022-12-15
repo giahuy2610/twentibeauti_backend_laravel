@@ -37,5 +37,6 @@ class Collection extends Model
             $collection->Products = $productsInCol ?? [];
         }
         return $collection;
-    }
+    }    
+
 }

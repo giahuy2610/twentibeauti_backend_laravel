@@ -19,7 +19,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PromotionRegisterController;
 use App\Http\Controllers\EventController;
-
+use App\Http\Controllers\EmailController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,6 +30,10 @@ use App\Http\Controllers\EventController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//Send email
+Route::group(['prefix' => 'email'], function(){
+Route::get('sendEmail',[EmailController::class,'sendEmail'])->name('email.sendEmail');
+});
 
 Route::group(['prefix' => 'coupon'], function () {
     // add a new coupon -- done

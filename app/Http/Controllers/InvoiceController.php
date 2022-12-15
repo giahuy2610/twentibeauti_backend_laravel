@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Throwable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-
+use Illuminate\Support\Facades\Mail;
 class InvoiceController extends Controller
 {
     /**
@@ -38,7 +38,6 @@ class InvoiceController extends Controller
             $invoice = new Invoice();
             $invoice->IDCus = $request->IDCus;
             $invoice->MethodPay = $request->MethodPay;
-
             $coupon = null;
             //check available of coupon if have coupon
             if ($request->CodeCoupon != null) {
@@ -86,7 +85,11 @@ class InvoiceController extends Controller
                 $productDetail->save();
                 $totalValue += (RetailPrice::showCurrent($product['IDProduct'])->Price ?? $productDetail->ListPrice) * $product['Quantity'];
             }
-
+            //Send email confirm order
+            Mail::send('email.CheckInvoice',compact('address','invoice','totalValue','productDetail'), function($email) use($address){
+                $email->subject('TWENTI - XÁC NHẬN ĐƠN HÀNG');
+                $email->to($address->Email, $address->FirstName);
+            });
             //remove products out of customer cart
             Cart::where('IDCus', $request->IDCus)->delete();
 
