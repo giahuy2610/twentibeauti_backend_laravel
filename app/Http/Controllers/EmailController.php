@@ -8,15 +8,22 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\Handler;
 use App\Exceptions\InvalidOrderException;
 use App\Exceptions;
+use App\Models\Customer;
+use App\Models\PromotionRegister;
 
 class EmailController extends Controller
 {
     public function sendEmail() {
-        $name='Dịu Ái';
-        Mail::send('email.test',compact('name'), function($email) use($name){
-            $email->subject('Đặt hàng thành công');
-            $email->to('20520368@gm.uit.edu.vn', $name);
+        $customer = PromotionRegister::get();
+        $title_email='CHƯƠNG TRÌNH KHUYẾN MÃI CỦA TWENTI';  
+        $data = [];
+        foreach($customer as $cus) {
+            $data['email'][] = $cus->Email;
+        }
+        Mail::send('email.test',$data,function($message) use($title_email,$data){
+            $message->to($data['email'])->subject($title_email);
+            $message->from($data['email'],$title_email);
         });
-
+        return redirect()->back()->with('message','Gửi chương trình khuyến mãi thành công');
     } 
 }
