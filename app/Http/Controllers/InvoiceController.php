@@ -15,6 +15,7 @@ use Throwable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
+
 class InvoiceController extends Controller
 {
     /**
@@ -86,7 +87,7 @@ class InvoiceController extends Controller
                 $totalValue += (RetailPrice::showCurrent($product['IDProduct'])->Price ?? $productDetail->ListPrice) * $product['Quantity'];
             }
             //Send email confirm order
-            Mail::send('email.CheckInvoice',compact('address','invoice','totalValue','productDetail'), function($email) use($address){
+            Mail::send('email.CheckInvoice', compact('address', 'invoice', 'totalValue', 'productDetail'), function ($email) use ($address) {
                 $email->subject('TWENTI - XÁC NHẬN ĐƠN HÀNG');
                 $email->to($address->Email, $address->FirstName);
             });
@@ -337,6 +338,6 @@ class InvoiceController extends Controller
             $invoice->IsPaid = true;
             $invoice->save();
         }
-        return Redirect::to('http://localhost:3000/details/' .$request->vnp_TxnRef);
+        return Redirect::to('http://localhost:3000/details/' . $request->vnp_TxnRef);
     }
 }

@@ -29,7 +29,9 @@ class PromotionRegisterController extends Controller
         if ($temp == null) {
             $new = new PromotionRegister();
             $new->Email = $request->Email;
-            $new->IDCus = Customer::where('Email', $request->Email)->first()->IDCus;
+            $cus = Customer::where('Email', $request->Email)->first();
+            if ($cus != null)
+                $new->IDCus = $cus->IDCus;
             $new->save();
             return response()->json('Completed', 200);
         }

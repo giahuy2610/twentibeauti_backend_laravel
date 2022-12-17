@@ -31,9 +31,7 @@ use App\Http\Controllers\EmailController;
 |
 */
 //Send email
-Route::group(['prefix' => 'email'], function(){
-Route::get('sendEmail',[EmailController::class,'sendEmail'])->name('email.sendEmail');
-});
+
 
 Route::group(['prefix' => 'coupon'], function () {
     // add a new coupon -- done
@@ -187,6 +185,9 @@ Route::group(['prefix' => 'promotion'], function () {
     Route::get('index', [PromotionRegisterController::class, 'index'])->name('promotion.index');
     // create promotion register -- done - huy
     Route::post('create', [PromotionRegisterController::class, 'create'])->name('promotion.create');
+
+    //send email to list of customers
+    Route::post('send', [EmailController::class, 'sendEmail'])->name('email.sendEmail');
 });
 
 
@@ -204,15 +205,6 @@ Route::group(['prefix' => 'event'], function () {
     Route::put('update', [EventController::class, 'update'])->name('event.update');
 });
 
-// Route::get('send-mail', function () {
-
-//     $details = [
-//         'title' => 'Mail from ItSolutionStuff.com',
-//         'body' => 'This is for testing email using smtp'
-//     ];
-
-//     Mail::to('giahuytrinh.26102002@gmail.com')->send(new \App\Mail\TWENTIMAIL($details));
-// });
 
 Route::get('test', [InvoiceController::class, 'pay'])->name('test');
 Route::get('vnpay-return', [InvoiceController::class, 'vnpayReturn'])->name('vnpay-return');

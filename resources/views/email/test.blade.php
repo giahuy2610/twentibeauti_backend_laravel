@@ -1,1 +1,1 @@
-<p>aboijoin</p>
+{!!$content!!}
