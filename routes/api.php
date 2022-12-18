@@ -43,21 +43,21 @@ Route::group(['prefix' => 'coupon'], function () {
     // remove a coupon
     Route::post('destroy', [CouponController::class, 'destroy'])->name('coupon.destroy');
 
-    // get a specific coupons in database
+    // get a specific coupons in database -- done - huy 1
     Route::get('show/{id}', [CouponController::class, 'show'])->name('coupon.show');
 
-    //get all coupons in database
+    //get all coupons in database -- done - huy - 1
     Route::get('index', [CouponController::class, 'index'])->name('coupon.index');
 
-    //get all coupons in database which are available
+    //get all coupons in database which are available -- done - huy 1
     Route::get('available', [CouponController::class, 'indexAvailable'])->name('coupon.available');
 
-    //check available all info of specific coupon code
+    //check available all info of specific coupon code -- done - huy 1
     Route::get('check-available/{code}', [CouponController::class, 'checkAvailableOfCode'])->name('coupon.checkAvailableOfCode');
 });
 Route::group(['prefix' => 'collection'], function () {
 
-    // get a specific collection in database, included both information and products list -- done - huy
+    // get a specific collection in database, included both information and products list -- done - huy 1
     Route::get('show/{id?}', [CollectionController::class, 'show'])->name('productcollection.show');
     //insert in database
     Route::post('create', [CollectionController::class, 'create'])->name('collection.create');
@@ -116,17 +116,17 @@ Route::group(['prefix' => 'cart'], function () {
     // get all products in cart -- done - huy
     Route::post('show', [CartController::class, 'show'])->name('cart.show');
 });
-// get all products in cart -- done - huy
+// get all products in cart -- done - huy - 2
 Route::post('login', [CustomerController::class, 'getLogin'])->name('login.get');
 
 
 Route::group(['prefix' => 'retail-price'], function () {
-    // the current retail price of specified product -- done - huy
+    // the current retail price of specified product -- done - huy - 1
     Route::get('show-current/{IDProduct}', [RetailPriceController::class, 'showCurrent'])->name('retailPrice.showCurrent');
 });
 
 Route::group(['prefix' => 'product-image'], function () {
-    // the images of specified product -- done - huy
+    // the images of specified product -- done - huy 1
     Route::get('index/{IDProduct}', [ProductImageController::class, 'index'])->name('productImage.index');
 });
 
@@ -139,7 +139,7 @@ Route::group(['prefix' => 'review'], function () {
 });
 
 Route::group(['prefix' => 'image-slider'], function () {
-    // the reviews(included images of each) of specified product -- done - huy
+    // the reviews(included images of each) of specified product -- done - huy - 1
     Route::get('available', [ImageSliderController::class, 'getAvailable'])->name('imageslider.index');
 });
 
@@ -159,24 +159,24 @@ Route::group(['prefix' => 'type'], function () {
 });
 
 Route::group(['prefix' => 'customer'], function () {
-    // get customer info -- done - huy
+    // get customer info -- done - huy 1
     Route::get('show/{IDCus?}', [CustomerController::class, 'show'])->name('customer.show');
 });
 
 Route::group(['prefix' => 'invoice'], function () {
-    // get invoice info -- done - huy
+    // get invoice info -- done - huy 
     Route::get('show/{IDInvoice?}', [InvoiceController::class, 'show'])->name('invoice.show');
 
     // create invoice info -- done - huy
     Route::post('create', [InvoiceController::class, 'create'])->name('invoice.create');
 
-    // get invoice of customer-- done - huy
+    // get invoice of customer-- done - huy 1
     Route::get('customer/{IDCustomer}', [InvoiceController::class, 'invoiceOfCustomer'])->name('invoice.invoiceOfCustomer');
 
     //count number of invoice in range -- done -huy
     Route::get('count', [InvoiceController::class, 'countInvoiceInRange'])->name('invoice.countInvoiceInRange');
 
-    //change idtracking of invoice
+    //change idtracking of invoice -- done - huy 1
     Route::put('tracking-status', [InvoiceController::class, 'changeTracking'])->name('invoice.changeTracking');
 });
 
@@ -207,4 +207,6 @@ Route::group(['prefix' => 'event'], function () {
 
 
 Route::get('test', [InvoiceController::class, 'pay'])->name('test');
+
+//done - huy 1
 Route::get('vnpay-return', [InvoiceController::class, 'vnpayReturn'])->name('vnpay-return');

@@ -37,6 +37,7 @@ class EventController extends Controller
             $event->EndOn = $request->EndOn;
             $event->save();
 
+
             //create product retail price belonged to this event
             foreach ($request->Products as $product) {
                 $retailPrice = new RetailPrice();

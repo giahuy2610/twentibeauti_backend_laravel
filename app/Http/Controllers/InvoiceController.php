@@ -333,11 +333,18 @@ class InvoiceController extends Controller
 
     public function vnpayReturn(Request $request)
     {
+
         if ($request->vnp_ResponseCode == '00') {
             $invoice = Invoice::find($request->vnp_TxnRef);
             $invoice->IsPaid = true;
             $invoice->save();
+        } else {
+            $invoice = Invoice::find($request->vnp_TxnRef);
+            $invoice->IsPaid = false;
+            $invoice->MethodPay = 1;
+            $invoice->save();
         }
+
         return Redirect::to('http://localhost:3000/details/' . $request->vnp_TxnRef);
     }
 }
