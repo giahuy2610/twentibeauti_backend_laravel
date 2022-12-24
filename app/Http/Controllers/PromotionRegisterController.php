@@ -93,10 +93,4 @@ class PromotionRegisterController extends Controller
     {
         //
     }
-
-    public function sendEmail(Request $request)
-    {
-        foreach ($request as $register) {
-        }
-    }
 }

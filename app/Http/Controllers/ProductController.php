@@ -51,6 +51,14 @@ class ProductController extends Controller
             $product->IDType = $request->IDType;
             $product->IDTag = $request->IDTag;
             $product->save();
+
+            foreach ($request->Images as $imageURL) {
+                $new = new ProductImage();
+                $new->IDProduct = $product->IDProduct;
+                $new->Path = $imageURL;
+                $new->save();
+            }
+
             return response()->json($product, 200);
         } catch (Throwable $e) {
             return response()->json($e->getMessage(), 400);
