@@ -47,7 +47,7 @@ class EventController extends Controller
                 if ($request->UnitsDiscount == 1) {
                     $retailPrice->Price -= $request->ValueDiscount;
                 } else if ($request->UnitsDiscount == 2) {
-                    $retailPrice->Price -= $retailPrice->Price * $request->ValueDiscount;
+                    $retailPrice->Price -= $retailPrice->Price * ($request->ValueDiscount / 100);
                 } else if ($request->UnitsDiscount == 3) {
                     $retailPrice->Price = $request->ValueDiscount;
                 }
