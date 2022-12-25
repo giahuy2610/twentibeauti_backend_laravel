@@ -41,9 +41,9 @@ class EventController extends Controller
             //create product retail price belonged to this event
             foreach ($request->Products as $product) {
                 $retailPrice = new RetailPrice();
-                $retailPrice->IDProduct = $product['IDProduct'];
+                $retailPrice->IDProduct = $product;
                 $retailPrice->IDEvent = $event->IDEvent;
-                $retailPrice->Price = Product::find($product['IDProduct'])->ListPrice;
+                $retailPrice->Price = Product::find($product)->ListPrice;
                 if ($request->UnitsDiscount == 1) {
                     $retailPrice->Price -= $request->ValueDiscount;
                 } else if ($request->UnitsDiscount == 2) {
