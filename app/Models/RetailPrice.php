@@ -27,7 +27,7 @@ class RetailPrice extends Model
      */
     public static function showCurrent(int $IDProduct)
     {
-        $retailPrice = RetailPrice::select('Price')->where('IDProduct', $IDProduct)->Where('StartOn', '<=', Carbon::now())->Where('EndOn', '>=', Carbon::now())->first();
+        $retailPrice = RetailPrice::select('Price')->where('IDProduct', $IDProduct)->Where('StartOn', '<=', Carbon::now())->Where('EndOn', '>=', Carbon::now())->orderByDesc('CreatedOn')->first();
         if ($retailPrice == null) return $retailPrice;
         return $retailPrice->Price;
     }
