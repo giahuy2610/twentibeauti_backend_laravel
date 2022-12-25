@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\RetailPrice;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\Double;
 use Throwable;
 
 class EventController extends Controller
@@ -47,7 +48,7 @@ class EventController extends Controller
                 if ($request->UnitsDiscount == 1) {
                     $retailPrice->Price -= $request->ValueDiscount;
                 } else if ($request->UnitsDiscount == 2) {
-                    $retailPrice->Price -= $retailPrice->Price * ($request->ValueDiscount / 100);
+                    $retailPrice->Price -= $retailPrice->Price * (float)($request->ValueDiscount / 100);
                 } else if ($request->UnitsDiscount == 3) {
                     $retailPrice->Price = $request->ValueDiscount;
                 }
